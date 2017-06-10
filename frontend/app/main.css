@@ -1,0 +1,56 @@
+#device-name {
+    font-family: 'Open Sans', sans-serif;
+}
+#coordinates {
+    font-family: 'Open Sans', sans-serif;
+}
+#time {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.map-container {
+    height: 78vh;
+}
+.map-element {
+    height: 100%;
+}
+.default-databar {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+    color: #0080FF;
+}
+.error-databar {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+    color: red;
+}
+.data-container {
+    height: 20vh;
+    text-align: center;
+}
+.activated-databar {
+    height: 100%;
+    overflow: auto;
+}
+.device-info {
+    margin-top: 10px;
+    float: left;
+}
+.image {
+    height: 100%;
+    margin: 10px;
+}
+
+.image a {
+    height: 100%;
+}
+
+img {
+    height: inherit;
+}

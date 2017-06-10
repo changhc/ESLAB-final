@@ -1,0 +1,23 @@
+{
+  "name": "eslab-hw2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/changhc/ESLAB-hw2.git"
+  },
+  "author": "changhc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/changhc/ESLAB-hw2/issues"
+  },
+  "homepage": "https://github.com/changhc/ESLAB-hw2#readme",
+  "dependencies": {
+    "request": "^2.81.0",
+    "restify": "^4.3.0"
+  }
+}
