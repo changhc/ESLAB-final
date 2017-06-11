@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify
 import gpio_server as servo
-from getch import getch, pause
 import os, signal, subprocess, time, atexit
 
 app = Flask(__name__)
@@ -9,14 +8,7 @@ cmd = "/home/pi/eslab/streaming.sh"
 path = "/home/pi/mjpg-streamer/mjpg-streamer-experimental/"
 proc = None
 
-#rotate_cmd = ["python", "gpio_server.py"]
-#rotation_proc = subprocess.Popen(rotate_cmd, cwd="/home/pi/eslab/", stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-#r_in = rotation_proc.stdin
-#r_out = rotation_proc.stdout
 motor = servo.ServoController(18)
-# motor.setAngle(0)
-# angle = 0
-# step = 20
 motor.setDutyCycle(6)
 step = 1
 
@@ -78,14 +70,6 @@ def rotate():
     if request.json['command'] == '1':
         print 'UP'
 
-        #angle = angle + step
-
-        #if angle > 180:
-        #    angle = 180
-        #elif angle < 0:
-        #    angle = 0
-
-        #r_in.write(str(angle))
         motor.incDutyCycle(step)
 
         res = {'test': 'up'}
@@ -93,14 +77,6 @@ def rotate():
     else:
         print 'DOWN'
 
-        #angle = angle - step
-
-        #if angle > 180:
-        #    angle = 180
-        #elif angle < 0:
-        #    angle = 0
-        
-        #r_in.write(str(angle))
         motor.incDutyCycle(-step)
         
         res = {'test': 'down'}
