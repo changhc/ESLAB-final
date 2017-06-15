@@ -1,5 +1,7 @@
 # ESLAB-project
 
-## Ideas
+Branches
 
-???
+* Frontend
+
+* Backend
