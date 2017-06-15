@@ -39,4 +39,5 @@ jspm_packages
 frontend/dist
 server/public
 data/
+images/
 *.swp

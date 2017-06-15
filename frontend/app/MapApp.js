@@ -58,7 +58,6 @@ export default class App extends Component {
             */
             ],
             currMarker: null,
-            timestamp: null,
             histData: []
         };
     }
@@ -75,11 +74,6 @@ export default class App extends Component {
         fetch(getDeviceRequest)
             .then(res => res.json())
             .then(res => JSON.parse(res))
-            .then(res => {
-                //console.log(res);
-                this.setState({timestamp: res.timestamp});
-                return res;
-            })
             .then(res => arrayToMarkers(res.data))
             .then(markers => this.setState({
                 markers: markers
@@ -109,8 +103,9 @@ export default class App extends Component {
             .then((res) => {
                 this.setState({
                     currMarker: targetMarker,
-                    timestamp: res.timestamp,
                 });
+                document.getElementById("image-instance").src = 'data:image/jpeg;base64,'+res.image;
+
             })
 
     }
@@ -131,7 +126,6 @@ export default class App extends Component {
                     <div className="data-container">
                         <DataBar
                             currMarker={this.state.currMarker}
-                            timestamp={this.state.timestamp}
                         />
                     </div>
                 </div>

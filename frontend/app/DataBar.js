@@ -10,17 +10,15 @@ export default class DataBar extends React.Component {
             key = "Filename: " +  marker.key;
             pos = "(Lat, Lng) = (" + marker.position.lat.toFixed(3) + ", " + marker.position.lng.toFixed(3) + ")";
 
-            let time = new Date(this.props.timestamp).toLocaleString();
 
             return (
                 <div className="activated-databar">
                     <div className="device-info">
                         <h2 id="device-name">{key}</h2>
                         <h3 id="coordinates">{pos}</h3>
-                        <h3 id="time">Created time: {time}</h3>
                     </div>
-                    <div className="image"> 
-                        <a href={`/image/${marker.key}.jpg`}><img src={`/image/${marker.key}.jpg`} /></a>
+                    <div className="image">
+                        <img id="image-instance"/>
                     </div>
                 </div>
             );

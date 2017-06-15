@@ -7,14 +7,17 @@ const fs = require('fs');
 const server = restify.createServer();
 let ipList = {};
 let database = {};
+let image = null;
 // let database = { "a": { coordN: 25.0157539, coordE: 121.5415932 }, "b": { coordN: 25.0563711, coordE: 121.5155881 }, "c": { coordN: 25.0431791, coordE: 121.5511676 } };
 
 
 const dataDir = './data/'
+const imageDir = './images/'
 
-function readJSON(file) {
+function readJSON(filename) {
     let obj = null;
-    fs.readFile(dataDir + file, 'utf8', function (err, data) {
+    // Read JSON
+    fs.readFile(dataDir + filename, 'utf8', function (err, data) {
         if (err) throw err;
         obj = JSON.parse(data);
 
@@ -26,6 +29,13 @@ function readJSON(file) {
         database[name] = {'coordE': lat, 'coordN': lng}
 
     });
+
+}
+
+function readImage(filename) {
+    // Read Image
+    image = fs.readFileSync(imageDir + filename);
+
 }
 
 fs.readdir(dataDir, function(err, files) {
@@ -68,13 +78,14 @@ server.post('/api/case', (req, res) => {
     console.error(err);
     res.send(400);
   }
+  readImage(id + '.jpg');
 
-  const body = {
-    deviceId: id,
-    timestamp: Date.now(),
+  let imageString = new Buffer(image).toString('base64');
+  let payload = {
+      image: imageString
   };
 
-  res.send(200, JSON.stringify(body));
+  res.send(200, JSON.stringify(payload));
 });
 
 server.post('/api/report', (req, res) => {
