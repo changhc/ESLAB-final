@@ -1,8 +1,8 @@
-# ESLAB-project
+# ESLAB-Final Project
 
-Branches
+## Branches
 
-* Frontend
+### Frontend
 
 主要放的是網頁部分，一開始命名取得不好，請見諒
   
@@ -24,7 +24,7 @@ Branches
   
  `node server.js`
 
-* Backend
+### Backend
 
  這邊放的是RPi硬體部分，一樣在命名上有點問題，請見諒
   
