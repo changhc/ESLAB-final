@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import gpio_server as servo
-import os, signal, subprocess, time, atexit
+from getch import getch, pause
+import os, signal, subprocess, time, atexit, json
 
 app = Flask(__name__)
 
@@ -21,11 +22,12 @@ def kill_child():
     if proc is None:
         pass
     else:
-	child_pid = proc.pid
+        child_pid = proc.pid
         if child_pid is None:
             pass
-	else:
+        else:
        	    os.killpg(os.getpgid(child_pid), signal.SIGTERM)
+        proc = None
 
 
 @app.route('/')
@@ -35,15 +37,16 @@ def index():
 @app.route('/api/streaming', methods=['PUT'])
 def stream():
     global cmd, path, proc
-    
+
     if request.json['command'] == '1':
         print 'ON'
-        proc = subprocess.Popen(cmd, shell=True, cwd=path, preexec_fn=os.setsid)
+        if proc is None:
+            proc = subprocess.Popen(cmd, shell=True, cwd=path, preexec_fn=os.setsid)
         res = {'test': 'streaming on'}
         return jsonify(res)
     else:
         print 'OFF'
-        os.killpg(os.getpgid(proc.pid), signal.SIGTERM)
+        kill_child()
         res = {'test': 'streaming off'}
         return jsonify(res)
 
@@ -55,10 +58,15 @@ def capture():
         timeString = timeString + str(currTime[i]) + "_"
     i = 5
     timeString = timeString + str(currTime[i])
-        
+
     if request.json['command'] == '1':
         print 'CAPTURING'
-        subprocess.Popen(['wget', 'http://localhost:9090/?action=snapshot', '-O', 'output' + timeString + '.jpg'])
+        subprocess.Popen(['wget', 'http://localhost:9090/?action=snapshot', '-O', timeString + '.jpg'])
+
+        data = {'filename': timeString + '.jpg', 'lng': request.json['lng'], 'lat': request.json['lat']}
+
+        with open(timeString + '.json', 'w') as outfile:
+            json.dump(data, outfile)
         res = {'test': 'captured'}
         return jsonify(res)
 
@@ -66,7 +74,7 @@ def capture():
 def rotate():
 
     global angle, step
-    
+
     if request.json['command'] == '1':
         print 'UP'
 
@@ -78,7 +86,7 @@ def rotate():
         print 'DOWN'
 
         motor.incDutyCycle(-step)
-        
+
         res = {'test': 'down'}
         return jsonify(res)
 
