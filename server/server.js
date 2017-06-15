@@ -3,9 +3,35 @@
 const restify = require('restify');
 const request = require('request');
 const path = require('path');
+const fs = require('fs');
 const server = restify.createServer();
 let ipList = {};
-let database = { "a": { coordN: 25.0157539, coordE: 121.5415932 }, "b": { coordN: 25.0563711, coordE: 121.5155881 }, "c": { coordN: 25.0431791, coordE: 121.5511676 } };
+let database = {};
+// let database = { "a": { coordN: 25.0157539, coordE: 121.5415932 }, "b": { coordN: 25.0563711, coordE: 121.5155881 }, "c": { coordN: 25.0431791, coordE: 121.5511676 } };
+
+
+const dataDir = './data/'
+
+function readJSON(file) {
+    let obj = null;
+    fs.readFile(dataDir + file, 'utf8', function (err, data) {
+        if (err) throw err;
+        obj = JSON.parse(data);
+
+        let name = obj['file_name'];
+        name = name.substr(0, name.length - 4);
+        let lat = parseFloat(obj['lat']);
+        let lng = parseFloat(obj['lng']);
+
+        database[name] = {'coordE': lat, 'coordN': lng}
+
+    });
+}
+
+fs.readdir(dataDir, function(err, files) {
+    files.forEach(readJSON);
+});
+
 server.use(restify.bodyParser());
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -28,6 +54,7 @@ server.get('/api/cases', (req, res) => {
       body.data.push(deviceData);
     }
   }
+  console.log(body);
   res.send(200, JSON.stringify(body));
 });
 

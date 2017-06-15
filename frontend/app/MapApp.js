@@ -71,7 +71,7 @@ export default class App extends Component {
                               headers: getDeviceHeaders,
                               mode: 'cors',
                               cache: 'default' };
-        let getDeviceRequest = new Request('/api/cases', getDeviceInit);
+        let getDeviceRequest = new Request('http://localhost:3333/api/cases', getDeviceInit);
         fetch(getDeviceRequest)
             .then(res => res.json())
             .then(res => JSON.parse(res))
@@ -99,7 +99,7 @@ export default class App extends Component {
                               body: JSON.stringify({caseId: targetMarker.key})
         };
 
-        let req = new Request('/api/case', init);
+        let req = new Request('http://localhost:3333/api/case', init);
 
         var data = null;
 
