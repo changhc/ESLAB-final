@@ -50,6 +50,17 @@ server.post('/api/case', (req, res) => {
   res.send(200, JSON.stringify(body));
 });
 
+server.post('/api/report', (req, res) => {
+  let body = req.body;
+  if (body.length !== undefined) {
+    for (let i = 0; i < body.length; i += 1) {
+      database[body[i].name] = { coordE: body[i].lng, coordN: body[i].lat };
+    }
+  } else {
+    database[body.name] = { coordE: body.lng, coordN: body.lat };
+  }
+  res.sendStatus(202);
+});
 
 server.get(/\/*/, restify.serveStatic({
   directory: path.join(__dirname, '/public'),
