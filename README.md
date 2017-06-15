@@ -8,7 +8,7 @@
   
 裏頭的`frontend`以及`server`資料夾個別放的是網頁介面的前端以及後端
   
-`frontend` usage: 
+* `frontend` usage: 
   
 `cd frontend/`
   
@@ -16,7 +16,7 @@
   
 之後在`http://localhost:8000/`就能使用地圖介面來瀏覽拍攝到的照片
   
-`server` usage:
+* `server` usage:
   
  將RPi上面拍到的照片放入`server/images`，JSON放入`server/data`
   
