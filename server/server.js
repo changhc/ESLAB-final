@@ -20,8 +20,9 @@ function readJSON(filename) {
     fs.readFile(dataDir + filename, 'utf8', function (err, data) {
         if (err) throw err;
         obj = JSON.parse(data);
+        console.log(data);
 
-        let name = obj['file_name'];
+        let name = obj['filename'];
         name = name.substr(0, name.length - 4);
         let lat = parseFloat(obj['lat']);
         let lng = parseFloat(obj['lng']);
